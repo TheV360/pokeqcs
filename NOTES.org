@@ -8,7 +8,7 @@
 other things
  - palette references: [[data/mon_palettes.asm]]
    - defined here: [[data/super_palettes.asm#L233]]
- - evolutions and learnset (unbalance sparingly,): [[data/evos_moves.asm]
+ - evolutions and learnset (unbalance sparingly,): [[data/evos_moves.asm]]
  - for newmons dex order [[data/pokedex_order.asm]]
  
 * text repainting
@@ -17,7 +17,7 @@ other things
  (e.g. player/mon/item names)
  so they often go on their own line.
  
-  - the `#` (POKé) character takes 4 columns
+  - the =#= (POKé) character takes 4 columns
   - <PKMN> (used in battle ui) is 2 columns
   - the 18th column might be dangerous? idr. displays page indicator
  
@@ -28,7 +28,7 @@ other things
  
 
 ** dialogue macros
-[[macros/scripts/text.asm]]
+[[macros/text_macros.asm]]
 #+BEGIN_SRC
 text   ; Start writing text.
 next   ; Move a line down.
@@ -107,6 +107,6 @@ todo
  - new area pointers...? ([[data/map_header_banks.asm]] / [[data/map_header_pointers.asm]])
  
  - reference [[macros/data_macros.asm]]
-[[macros/data_macros.asm#L92][ `object sprite_id, x, y, move, range, textref, item/trnrclass, trnrnumber` ]]
-[[macros/data_macros.asm#L121][ `NORTH_MAP_CONNECTION` ]]
-[[macros/data_macros.asm#L166][ `WEST_MAP_CONNECTION` ]]
+ - [[macros/data_macros.asm#L92][ =object sprite_id, x, y, move, range, textref, item/trnrclass, trnrnumber= ]]
+ - [[macros/data_macros.asm#L121][ =NORTH_MAP_CONNECTION= ]]
+ - [[macros/data_macros.asm#L166][ =WEST_MAP_CONNECTION= ]]
