@@ -1,0 +1,112 @@
+* editing mons
+1. change the name: [[text/monster_names.asm]]
+ - @ is like \0 padding
+2. change the dex description text: [[text/pokedex.asm]] (red++ puts some newmons in [[text/pokedex2.asm]])
+3. change the dex species entry if necessary: [[data/pokedex_entries.asm]]
+
+
+other things
+ - palette references: [[data/mon_palettes.asm]]
+   - defined here: [[data/super_palettes.asm#L233]]
+ - evolutions and learnset (unbalance sparingly,): [[data/evos_moves.asm]
+ - for newmons dex order [[data/pokedex_order.asm]]
+ 
+* text repainting
+ each line is 18 characters max,
+ variable text could be up to 10,
+ (e.g. player/mon/item names)
+ so they often go on their own line.
+ 
+  - the `#` (POKé) character takes 4 columns
+  - <PKMN> (used in battle ui) is 2 columns
+  - the 18th column might be dangerous? idr. displays page indicator
+ 
+ - [[text/oakspeech.asm]]
+ - [[text/move_names.asm]]
+ - [[text.asm]] (global/misc text)
+ - [[item_descriptions.asm]]
+ 
+
+** dialogue macros
+[[macros/scripts/text.asm]]
+#+BEGIN_SRC
+text   ; Start writing text.
+next   ; Move a line down.
+line   ; Start writing at the bottom line.
+para   ; Start a new paragraph.
+cont   ; Scroll to the next line.
+done   ; End a text box.
+prompt ; Prompt the player to end a text box (initiating some other event).
+
+page   ; Start a new Pokédex page.
+dex    ; End a Pokédex entry.
+#+END_SRC
+(all of them except `text` insert commands for the text parser)
+
+** special characters
+[[home/text.asm#L85]]
+#+BEGIN_SRC
+	dict "<NULL>",    NullChar
+	dict "<SCROLL>",  _ContTextNoPause
+	dict "<_CONT>",   _ContText
+	dict "<PARA>",    Paragraph
+	dict "<PAGE>",    PageChar
+	dict "<PLAYER>",  PrintPlayerName
+	dict "<RIVAL>",   PrintRivalName
+	dict "#",         PlacePOKe
+	dict "<PC>",      PCChar
+	dict "<ROCKET>",  RocketChar
+	dict "<TM>",      TMChar
+	dict "<TRAINER>", TrainerChar
+	dict "<CONT>",    ContText
+	dict "<……>",      SixDotsChar
+	dict "<DONE>",    DoneText
+	dict "<PROMPT>",  PromptText
+	dict "<PKMN>",    PlacePKMN
+	dict "<DEXEND>",  PlaceDexEnd
+	dict "<TARGET>",  PlaceMoveTargetsName
+	dict "<USER>",    PlaceMoveUsersName
+#+END_SRC
+outside of battle
+ - TX_RAM wcd6d is a selected mon name
+ - TX_RAM wcf4b is a selected item name
+ 
+** examples
+usually it just looks like this (from [[text.asm]])
+#+BEGIN_SRC
+_ViridianBlackboardSleepText::
+	text "A #mon can't"
+	line "attack if it's"
+	cont "asleep!"
+
+	para "#mon will stay"
+	line "asleep even after"
+	cont "battles."
+
+	para "Use Awakening to"
+	line "wake them up!"
+	prompt
+#+END_SRC
+
+* editing maps
+todo
+
+[[https://github.com/Rangi42/polished-map]]
+
+ - map block data [[maps]]
+ - tileset list [[gfx/tilesets]]
+ - blocksets [[gfx/blocksets]]
+ - location title [[text/map_names.asm]]
+ - overworld text [[text/maps]]
+ - music [[data/map_songs.asm]]
+ 
+ - [[data/mapHeaders]]
+ - [[data/mapObjects]]
+ - [[data/wildPokemon]]
+ - if adding entire new area/changing map layout [[data/town_map_order.asm]] + [[data/town_map_entries.asm]]
+ - new area pointers...? ([[data/map_header_banks.asm]] / [[data/map_header_pointers.asm]])
+ 
+ - reference [[macros/data_macros.asm]]
+[[macros/data_macros.asm#L92][ `object sprite_id, x, y, move, range, textref, item/trnrclass, trnrnumber` ]]
+[[macros/data_macros.asm#L121][ `NORTH_MAP_CONNECTION` ]]
+[[macros/data_macros.asm#L166][ `WEST_MAP_CONNECTION` ]]
