@@ -14,7 +14,7 @@ import operator
 import configuration
 config = configuration.Config()
 
-from .lz import Compressed, Decompressed
+from lz import Compressed, Decompressed
 
 
 def split(list_, interval):
