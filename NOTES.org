@@ -26,6 +26,7 @@ other things
  - [[text.asm]] (global/misc text)
  - [[item_descriptions.asm]]
  
+for more detail on trainer dialogue see the "editing maps" section
 
 ** dialogue macros
 [[macros/text_macros.asm]]
@@ -43,14 +44,10 @@ dex    ; End a Pokédex entry.
 #+END_SRC
 (all of them except `text` insert commands for the text parser)
 
-** special characters
+** other text commands
 [[home/text.asm#L85]]
 #+BEGIN_SRC
-	dict "<NULL>",    NullChar
 	dict "<SCROLL>",  _ContTextNoPause
-	dict "<_CONT>",   _ContText
-	dict "<PARA>",    Paragraph
-	dict "<PAGE>",    PageChar
 	dict "<PLAYER>",  PrintPlayerName
 	dict "<RIVAL>",   PrintRivalName
 	dict "#",         PlacePOKe
@@ -58,19 +55,34 @@ dex    ; End a Pokédex entry.
 	dict "<ROCKET>",  RocketChar
 	dict "<TM>",      TMChar
 	dict "<TRAINER>", TrainerChar
-	dict "<CONT>",    ContText
 	dict "<……>",      SixDotsChar
-	dict "<DONE>",    DoneText
-	dict "<PROMPT>",  PromptText
 	dict "<PKMN>",    PlacePKMN
-	dict "<DEXEND>",  PlaceDexEnd
 	dict "<TARGET>",  PlaceMoveTargetsName
 	dict "<USER>",    PlaceMoveUsersName
 #+END_SRC
-outside of battle
- - TX_RAM wcd6d is a selected mon name
- - TX_RAM wcf4b is a selected item name
- 
+
+** other macros: [[macros/text_macros.asm#L14]] \\
+*** quick reference:
+#+BEGIN_SRC
+TX_RAM addr ; print text at addr
+TX_BCD addr bytelen ;
+TX_CURSOR x(0:19) y(0:17) ; set cursor pos
+TX_LINE
+TX_BLINK
+TX_ASM
+TX_NUM addr bytelen digits
+TX_DELAY
+TX_SFX_ITEM_1
+TX_SFX_LEVEL_UP
+TX_WAIT
+TX_SFX_ITEM_2
+TX_SFX_KEY_ITEM
+TX_SFX_CAUGHT_MON
+TX_SFX_DEX_PAGE_ADDED
+TX_CRY_NIDORINA
+TX_CRY_PIDGEOT
+#+END_SRC
+
 ** examples
 usually it just looks like this (from [[text.asm]])
 #+BEGIN_SRC
