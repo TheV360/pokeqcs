@@ -6,7 +6,7 @@ from __future__ import print_function
 __package__ = "pokemontools"
 
 import os
-from . import png
+import png
 from math import sqrt, floor, ceil
 import argparse
 import operator
