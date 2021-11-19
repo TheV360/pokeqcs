@@ -6,6 +6,13 @@
 
 
 other things
+ - sprites
+  - disasm provides these 4-color pngs for editing
+  - front sprite: [[pic/bmon]]
+  - back sprite: [[pic/monback]]
+  - these get converted by a python2 script to =.2bpp= files at build time
+   - =python2 extras/pokemontools/gfx.py 2bpp pic/bmon/politoed.png=
+   - =python2 extras/pokemontools/pic.py compress pic/bmon/politoed.2bpp=
  - palette references: [[data/mon_palettes.asm]]
    - defined here: [[data/super_palettes.asm#L233]]
  - evolutions and learnset (unbalance sparingly,): [[data/evos_moves.asm]]
