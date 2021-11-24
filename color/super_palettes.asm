@@ -150,4 +150,54 @@ startHalfPaletteTransfer:
 	ld [rSVBK],a
 	ret
 
+LoadTypePalette:
+	ld hl, TypePaletteTable
+	;jr LoadPalette_1bpp
+	
+LoadPalette_1bpp:
+	ld a,[rSVBK]
+	ld b,a
+	ld a,2
+	ld [rSVBK],a
+	push bc
+
+	push hl
+	ld a,e
+	ld l,d
+	ld h,0
+	pop de
+	add hl,de
+
+	ld de,W2_BgPaletteData
+	;jr startHalfPaletteTransfer2
+
+startHalfPaletteTransfer2:
+	add a
+	add a
+	add a
+	add e
+	ld e,a
+	ld b,2
+
+	ld a, $FF ;[hli]
+	ld [de], a
+	inc de
+	ld a, $7f
+	ld [de], a
+	inc de
+	inc de
+	inc de
+	inc de
+	inc de
+.palLoop
+	ld a,[hli]
+	ld [de],a
+	inc de
+	dec b
+	jr nz,.palLoop
+
+	pop af
+	ld [rSVBK],a
+	ret
+
 INCLUDE "data/super_palettes.asm"

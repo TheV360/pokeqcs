@@ -263,6 +263,10 @@ INCLUDE "engine/menu/pc.asm"
 
 INCLUDE "data/map_songs.asm" ; moved from bank 3
 
+	;; CategoryIconGFX: INCBIN "gfx/battle/categories.2bpp"
+TypeIconGFX: INCBIN "gfx/battle/types.1bpp"
+TypeCategoryIconGFXEnd:	
+
 
 SECTION "bank6",ROMX,BANK[$6]
 

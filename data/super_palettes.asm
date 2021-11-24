@@ -224,6 +224,26 @@ SuperPalettes:
 	RGB 24,20,10
 	RGB 0,0,0
 
+TypePaletteTable:
+	RGB 21, 21, 14 				; NORMAL
+	RGB 27, 04, 02 				; FIGHTING
+	RGB 22, 17, 30 				; FLYING
+	RGB 22, 07, 19 				; POISON
+	RGB 29, 24, 12 				; GROUND
+	RGB 24, 20, 07 				; ROCK
+	RGB 21, 23, 06 				; BUG
+	RGB 15, 11, 18 				; GHOST
+	RGB 23, 23, 25 				; STEEL
+	RGB 31, 15, 04 				; FIRE
+	RGB 11, 18, 30 				; WATER
+	RGB 11, 25, 11 				; GRASS
+	RGB 31, 24, 06 				; ELECTRIC
+	RGB 31, 09, 15 				; PSYCHIC
+	RGB 16, 27, 27 				; ICE
+	RGB 15, 07, 31 				; DRAGON
+	RGB 15, 11, 09 				; DARK
+	RGB 31, 20, 29 				; FAIRY
+	RGB 13, 19, 19 				; UNKNOWN T
 
 ; The following are only available with gen 2 graphics patch: individual palettes for
 ; pokemon, trainers, etc.

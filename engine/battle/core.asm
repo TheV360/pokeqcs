@@ -439,6 +439,8 @@ MainInBattleLoop:
 	ld [wMenuItemToSwap], a
 	call MoveSelectionMenu
 	push af
+	ld hl, wFlags_0xcd60 + 1
+	res 0, [hl]					; uhhh if menu gets closed
 	call LoadScreenTilesFromBuffer1
 	call DrawHUDsAndHPBars
 	pop af
@@ -1984,6 +1986,8 @@ ReadPlayerMonCurHPAndStatus:
 	jp CopyData
 
 DrawHUDsAndHPBars:
+	ld b, SET_PAL_BATTLE
+	call RunPaletteCommand
 	call DrawPlayerHUDAndHPBar
 	jp DrawEnemyHUDAndHPBar
 
@@ -3093,13 +3097,13 @@ DisabledText:
 	db "Disabled!@"
 
 OtherText:
-	db "Status@"
+	db "Stat@"
 
 PhysicalText: ; Added for PS Split
-	db "Physical@"
+	db "Phys@"
 
 SpecialText: ; added for PS Split
-	db "Special@"
+	db "Spcl@"
 
 SelectEnemyMove:
 	ld a, [wLinkState]
