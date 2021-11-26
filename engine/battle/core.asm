@@ -3056,24 +3056,24 @@ PrintMenuItem:
 	and $3f
 	ld [wcd6d], a
 	ld a, [wPlayerSelectedMove]
-	call PhysicalSpecialSplit
-	cp a,$02
-	jp z, .OtherTextShow
-	cp a,$01
-	jp nz, .PhysicalTextShow
-	coord hl, 1, 9
-	ld de,SpecialText
-	call PlaceString
-	jp .RestOfTheRoutineThing
-.PhysicalTextShow
-	coord hl, 1,9
-	ld de,PhysicalText
-	call PlaceString
-	jr .RestOfTheRoutineThing
-.OtherTextShow
-	coord hl, 1,9
-	ld de,OtherText
-	call PlaceString
+;; 	call PhysicalSpecialSplit
+;; 	cp a,$02
+;; 	jp z, .OtherTextShow
+;; 	cp a,$01
+;; 	jp nz, .PhysicalTextShow
+;; 	coord hl, 1, 9
+;; 	ld de,SpecialText
+;; 	call PlaceString
+;; 	jp .RestOfTheRoutineThing
+;; .PhysicalTextShow
+;; 	coord hl, 1,9
+;; 	ld de,PhysicalText
+;; 	call PlaceString
+;; 	jr .RestOfTheRoutineThing
+;; .OtherTextShow
+;; 	coord hl, 1,9
+;; 	ld de,OtherText
+;; 	call PlaceString
 .RestOfTheRoutineThing
 	coord hl, 7, 11
 	ld [hl], "/"

@@ -57,6 +57,10 @@ startPaletteTransfer:
 	ld [rSVBK],a
 	ret
 
+LoadCategoryPalette:
+	ld hl, CategoryPaletteTable
+	jr LoadPalette
+
 LoadPokemonPalette:
 	ld hl, PokemonPaletteTable
 	jr LoadPalette
@@ -149,7 +153,7 @@ startHalfPaletteTransfer:
 	pop af
 	ld [rSVBK],a
 	ret
-
+	
 LoadTypePalette:
 	ld hl, TypePaletteTable
 	;jr LoadPalette_1bpp
@@ -165,6 +169,7 @@ LoadPalette_1bpp:
 	ld a,e
 	ld l,d
 	ld h,0
+	add hl,hl
 	pop de
 	add hl,de
 
@@ -179,10 +184,10 @@ startHalfPaletteTransfer2:
 	ld e,a
 	ld b,2
 
-	ld a, $FF ;[hli]
+	ld a, [hli]
 	ld [de], a
 	inc de
-	ld a, $7f
+	ld a, [hli]
 	ld [de], a
 	inc de
 	inc de

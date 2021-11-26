@@ -68,7 +68,7 @@ _PrintType_:
 	ld hl, vChars1 + $10 * $50	;"just whatever free space" (using font)
 	lb bc, BANK(TypeIconGFX), 4
 	call CopyVideoDataDouble ;Request1bpp
-	coord hl, 5, 10
+	coord hl, 3, 9
 	ld [hl], $50 + $80 			;$80-$ff is vChars1 (font)
 	inc hl
 	ld [hl], $51 + $80
@@ -76,6 +76,24 @@ _PrintType_:
 	ld [hl], $52 + $80
 	inc hl
 	ld [hl], $53 + $80
+
+	;; load category icons based on phys/special/status
+	ld a, [wPlayerSelectedMove]
+	ld [wTempMoveID], a
+	callba _PhysicalSpecialSplit
+	ld a, [wTempMoveID]
+	ld hl, CategoryIconGFX
+	ld bc, 4 * 8	; 4 * LEN_2BPP_TILE
+	call AddNTimes
+	ld d, h
+	ld e, l
+	ld hl, vChars1 + $10 * $54	;in free font space
+	lb bc, BANK(TypeIconGFX), 2
+	call CopyVideoData ;Request2bpp
+	coord hl, 1, 9
+	ld [hl], $54 + $80 			;$80-$ff is vChars1 (font)
+	inc hl
+	ld [hl], $55 + $80
 	
 	;; let color know we want type colored
 	ld hl, wFlags_0xcd60 + 1

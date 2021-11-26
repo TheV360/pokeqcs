@@ -224,25 +224,51 @@ SuperPalettes:
 	RGB 24,20,10
 	RGB 0,0,0
 
+CategoryPaletteTable:
+	RGB 31,28,00
+	RGB 27,04,02 		; PHYSICAL
+	RGB 27,31,31
+	RGB 00,14,29 		; SPECIAL
+	RGB 31,31,31
+	RGB 21,21,14 		; STATUS
 TypePaletteTable:
+	RGB 31,31,31
 	RGB 21, 21, 14 				; NORMAL
+	RGB 31,31,31
 	RGB 27, 04, 02 				; FIGHTING
+	RGB 31,31,31
 	RGB 22, 17, 30 				; FLYING
+	RGB 31,31,31
 	RGB 22, 07, 19 				; POISON
+	RGB 31,31,31
 	RGB 29, 24, 12 				; GROUND
+	RGB 31,31,31
 	RGB 24, 20, 07 				; ROCK
+	RGB 31,31,31
 	RGB 21, 23, 06 				; BUG
+	RGB 31,31,31
 	RGB 15, 11, 18 				; GHOST
+	RGB 31,31,31
 	RGB 23, 23, 25 				; STEEL
+	RGB 31,31,31
 	RGB 31, 15, 04 				; FIRE
+	RGB 31,31,31
 	RGB 11, 18, 30 				; WATER
+	RGB 31,31,31
 	RGB 11, 25, 11 				; GRASS
+	RGB 31,31,31
 	RGB 31, 24, 06 				; ELECTRIC
+	RGB 31,31,31
 	RGB 31, 09, 15 				; PSYCHIC
+	RGB 31,31,31
 	RGB 16, 27, 27 				; ICE
+	RGB 31,31,31
 	RGB 15, 07, 31 				; DRAGON
+	RGB 31,31,31
 	RGB 15, 11, 09 				; DARK
+	RGB 31,31,31
 	RGB 31, 20, 29 				; FAIRY
+	RGB 31,31,31
 	RGB 13, 19, 19 				; UNKNOWN T
 
 ; The following are only available with gen 2 graphics patch: individual palettes for

@@ -209,12 +209,12 @@ SetPal_Battle_Common:
 	ld a, [wFlags_0xcd60 + 1]
 	bit 0, a
 	jr z, .nomoveinfo1
-	;; ld hl, TypeIconPals
+	ld a, [wTempMoveID]
+	add a, a
+	ld d, a
+	ld e, 5
+	callba LoadCategoryPalette
 	ld a, [wPlayerMoveType]
-	;; ld c, a
-	;; ld b, 0
-	;; add hl, bc
-	;; add hl, bc
 	ld d, a	;[hl]
 	ld e, 6
 	callba LoadTypePalette
@@ -269,7 +269,12 @@ SetPal_Battle_Common:
 	ld a, [wFlags_0xcd60 + 1]
 	bit 0, a
 	jr z, .nomoveinfo2
-	ld hl, W2_TilesetPaletteMap + 5 + 10*20 ; d200 (5, 10)
+	ld hl, W2_TilesetPaletteMap + 1 + 9*20 ; d200 (5, 10)
+	ld a,5
+	ld b,1
+	ld c,2
+	call FillBox
+	ld hl, W2_TilesetPaletteMap + 3 + 9*20 ; d200 (5, 10)
 	ld a,6
 	ld b,1
 	ld c,4
