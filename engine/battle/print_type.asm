@@ -56,7 +56,7 @@ _PrintMoveType:
 	push hl
 								;
 	ld hl, TypeIconGFX
-	ld bc, 4 * 4	; 4 * LEN_1BPP_TILE
+	ld bc, 2 * 4 * 4	; 4 * LEN_1BPP_TILE
 ;
 	ld a, [wPlayerMoveType]
 ; fall through

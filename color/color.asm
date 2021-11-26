@@ -215,6 +215,7 @@ SetPal_Battle_Common:
 	ld e, 5
 	callba LoadCategoryPalette
 	ld a, [wPlayerMoveType]
+	add a, a
 	ld d, a	;[hl]
 	ld e, 6
 	callba LoadTypePalette
