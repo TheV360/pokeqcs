@@ -101,15 +101,46 @@ _PrintType_:
 	call LoadBattleCategoryAndTypePals ; set the palette
 	
 	pop hl
-	jp GBPalNormal ;reset palette
+	ret
 
 LoadBattleCategoryAndTypePals:	; Load palette map
-	ld b, SET_PAL_BATTLE
-	jp RunPaletteCommand
-	;; ld a, BANK(TypeIconPals);? was hardcoded $5? (why?)
-	;; ld de, $d200 ;($d200) (6, 10)
-	;; ld bc, 2
-	;; call SetPal_Battle
-	;; jp FarCopyData
+	;; ld b, SET_PAL_BATTLE
+	;; jp RunPaletteCommand
+	ld a,$02
+	ld [rSVBK],a
+
+	ld a, [wTempMoveID]
+	add a, a
+	ld d, a
+	ld e, 5
+	callba LoadCategoryPalette
+	ld a, [wPlayerMoveType]
+	add a, a
+	ld d, a	;[hl]
+	ld e, 6
+	callba LoadTypePalette
+
+	ld hl, W2_TilesetPaletteMap + 1 + 9*20 ; d200 (1, 9)
+	ld a, 5
+	ld [hli], a
+	ld [hl], a
+	ld hl, W2_TilesetPaletteMap + 3 + 9*20 ; d200 (3, 9)
+	ld a, 6
+	ld [hli], a
+	ld [hli], a
+	ld [hli], a
+	ld [hl], a ;set pal 6 thru (7,9)
+
+	ld a,3
+	ld [W2_StaticPaletteMapChanged],a
+	ld a,1
+	ld [W2_ForceBGPUpdate],a
+
+	xor a
+	ld [rSVBK],a
+
+	
+	ret
+
 
 INCLUDE "text/type_names.asm"

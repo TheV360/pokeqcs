@@ -264,24 +264,7 @@ SetPal_Battle_Common:
 	ld b,6
 	ld c,20
 	call FillBox
-
-	;; if the move info menu is open,
-	;; set type/cat color
-	ld a, [wFlags_0xcd60 + 1]
-	bit 0, a
-	jr z, .nomoveinfo2
-	ld hl, W2_TilesetPaletteMap + 1 + 9*20 ; d200 (5, 10)
-	ld a,5
-	ld b,1
-	ld c,2
-	call FillBox
-	ld hl, W2_TilesetPaletteMap + 3 + 9*20 ; d200 (5, 10)
-	ld a,6
-	ld b,1
-	ld c,4
-	call FillBox
-.nomoveinfo2
-
+	
 
 	xor a
 	ld [W2_TileBasedPalettes],a	; Use a direct color map instead of assigning colors to tiles
