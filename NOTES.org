@@ -108,8 +108,7 @@ _ViridianBlackboardSleepText::
 #+END_SRC
 
 * editing maps
-todo
-
+overview
 [[https://github.com/Rangi42/polished-map]]
 
  - map block data [[maps]]
@@ -129,3 +128,95 @@ todo
  - [[macros/data_macros.asm#L92][ =object sprite_id, x, y, move, range, textref, item/trnrclass, trnrnumber= ]]
  - [[macros/data_macros.asm#L121][ =NORTH_MAP_CONNECTION= ]]
  - [[macros/data_macros.asm#L166][ =WEST_MAP_CONNECTION= ]]
+
+editing a map.
+going to use pewter city as an example
+a good place to start is by finding the map's header file
+#+BEGIN_SRC asm
+PewterCity_h:
+	db OVERWORLD ; tileset
+	db PEWTER_CITY_HEIGHT, PEWTER_CITY_WIDTH ; dimensions (y, x)
+	dw PewterCityBlocks, PewterCityTextPointers, PewterCityScript ; blocks, texts, scripts
+	db SOUTH | EAST ; connections
+	SOUTH_MAP_CONNECTION PEWTER_CITY, ROUTE_2, 5, 0, Route2Blocks
+	EAST_MAP_CONNECTION PEWTER_CITY, ROUTE_3, 4, 0, Route3Blocks
+	dw PewterCityObject ; objects
+
+	db $0
+#+END_SRC
+okay! so there are some obvious and some less obvious things being defined here.
+for now i just want to look at the /connections/, which are "what other maps get stitched together with this one to create the overworld"
+in this case that's route 2, to the south, and route 3, to the east.
+in my opinion it's easier to think about routes in terms of "what landmarks are they next to" for planning purposes.
+
+the text and script pointers are also important but i want to come back to them later and instead look at 
+`PewterCityObject`. objects are defined in [[data/mapObjects]], pewter's are at [[data/mapObjects/PewterCity.asm]].
+it turns out "objects" includes:
+ - warps
+ - signs
+ - npcs
+ - npcs (questionable (berry trees))
+so now our list of "pewter city maps" looks like
+ - [[data/mapHeaders/Route2.asm]]
+ - [[data/mapHeaders/PewterCity.asm]]
+ - [[data/mapHeaders/Route3.asm]]
+ - [[data/mapHeaders/Museum1F.asm]]
+  - which references [[data/mapHeaders/Museum2F.asm]]
+ - [[data/mapHeaders/PewterGym.asm]]
+ - [[data/mapHeaders/PewterHouse1.asm]]
+ - [[data/mapHeaders/PewterMart.asm]]
+ - [[data/mapHeaders/PewterHouse2.asm]]
+ - [[data/mapHeaders/PewterPokecenter.asm]]
+ 
+it's very easy to miss entire indoor areas (such as the museum, here) when just looking through an alphabetical file list!!!
+
+as part of this initial exploration, let's also open [[maps/PewterCity.blk]] in Polished Map (and also Options > uncheck "Monochrome")
+[[https://smilebasicsource.com/api/File/raw/27458#.png]]\\
+not going to get too into map editing here but it is important to note that maps are defined in terms of 2x2 "blocks" made up of 4 tiles each. (the blockset can be seen on the left side.)
+
+Polished Map literally loves 2 loading map objects,,  so it's easier to make sense of the object coordinates here. hovering over events in event mode will present the source line as a tooltip.
+
+if we Data > View Event Script we can open the associated mapObjects file from earlier conveniently. copying the `SPRITE_BLACK_HAIR_BOY_2, $1a, $19` line and using coordinates for the top left (say, `$6, $5`) (DON'T FORGET TO INCREMENT THE OBJECT COUNT (from $7 to $8)!!) then reloading the event script (C-r) reflects that change.
+[[https://smilebasicsource.com/api/File/raw/27475#.png]]\\
+for npcs with the WALK movement type, the next argument is referred to as "direction/range"... where range should be understood as "which axes," except there are a bunch of special cases -- half of them ($D* for forced movement) are implemented only for movement scripts. for normal object definitions:
+ - $0 allows walking in any direction
+ - $1 is vertical movement only
+ - $2 is horizontal movement only
+
+the last argument to `object` is its /text id/. for this we have to look in the map script in [[scripts]], specifically the [[scripts/PewterCity.asm#L16][*TextPointers table*]]. the text id is an index into this table; if we want to add another unique text line, since there are 16 text references in pewter city already, this one will have to be 17. that is, changing our new object's text id to `$11` and adding a new text pointer entry `dw PewterCityText15` (for the next, uh, unused number. you don't have to name yours as confusingly!). the text definitions are organized in [[text/maps]], but uh-oh! those labels are indirections; they're prefixed with underscore in [[text/maps/PewterCity.asm]]! we have to reference the /actual/ text with a TX_FAR macro in the pewter city script,
+e.g.
+#+BEGIN_SRC asm
+PewterCityText15:
+	TX_FAR _PewterCityText15
+	db "@"
+#+END_SRC
+
+and /then/ it's okay to define the actual text, adding to [[text/maps/PewterCity.asm]]:
+#+BEGIN_SRC asm
+_PewterCityText15::
+  text "Welcome to"
+  line "Pewter City"
+  done
+#+END_SRC
+
+in summary, adding new text to the text pointer table involves
+ - adding a `dw Label` line to the text pointer table in [[scripts]]
+ - defining the text for that label in the script with `TX_FAR Label` and a terminating `db "@"` in the same file
+ - writing the text entry into the map's text organized in [[text/maps]]
+ 
+[[https://smilebasicsource.com/api/File/raw/27503#.png]]
+
+more advanced text repainting...\\
+as covered, PewterCityTextPointers is defined in [[scripts/PewterCity.asm#L16]] and refers to files in *[[text/maps]]*.
+
+there are two ways to find out which text belongs to which object:
+ - load up the game and talk to a trainer and find that text
+ - take a label from the text, check the text pointer table from the script, count out the index, and find that index in the mapObjects file
+
+we can check, for example, that `_PewterCityText1` belongs to `object SPRITE_LASS, $8, $f, STAY, NONE, $1`
+
+see the [[#Text_Repainting]] section for more on text commands.
+
+unfortunately, calling PlaySound from whatever bank scripts/ is in doesn't seem to work... but you /can/ make a TX_FAR reference to code in [[engine/]] that does. see vermillion gym and [[engine/hidden_object_functions17.asm]] for examples
+
+<todo>
