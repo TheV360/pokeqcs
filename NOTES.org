@@ -108,8 +108,7 @@ _ViridianBlackboardSleepText::
 #+END_SRC
 
 * editing maps
-todo
-
+overview
 [[https://github.com/Rangi42/polished-map]]
 
  - map block data [[maps]]
@@ -129,3 +128,197 @@ todo
  - [[macros/data_macros.asm#L92][ =object sprite_id, x, y, move, range, textref, item/trnrclass, trnrnumber= ]]
  - [[macros/data_macros.asm#L121][ =NORTH_MAP_CONNECTION= ]]
  - [[macros/data_macros.asm#L166][ =WEST_MAP_CONNECTION= ]]
+
+** welcom 2 my walkthrough tutorial
+going to use pewter city as an example\\
+a good place to start is by finding the map's header file
+#+BEGIN_SRC asm
+PewterCity_h:
+	db OVERWORLD ; tileset
+	db PEWTER_CITY_HEIGHT, PEWTER_CITY_WIDTH ; dimensions (y, x)
+	dw PewterCityBlocks, PewterCityTextPointers, PewterCityScript ; blocks, texts, scripts
+	db SOUTH | EAST ; connections
+	SOUTH_MAP_CONNECTION PEWTER_CITY, ROUTE_2, 5, 0, Route2Blocks
+	EAST_MAP_CONNECTION PEWTER_CITY, ROUTE_3, 4, 0, Route3Blocks
+	dw PewterCityObject ; objects
+
+	db $0
+#+END_SRC
+okay! so there are some obvious and some less obvious things being defined here.\\
+for now i just want to look at the /connections/, which are "what other maps get stitched together with this one to create the overworld"\\
+in this case that's route 2, to the south, and route 3, to the east.\\
+in my opinion it's easier to think about routes in terms of "what landmarks are they next to" for planning purposes.
+
+the text and script pointers are also important but i want to come back to them later and instead look at 
+=PewterCityObject=. objects are defined in [[data/mapObjects]], pewter's are at [[data/mapObjects/PewterCity.asm]].\\
+it turns out "objects" includes:
+ - warps
+ - signs
+ - npcs
+ - npcs (questionable (berry trees))
+so now our list of "pewter city maps" looks like
+ - [[data/mapHeaders/Route2.asm]]
+ - [[data/mapHeaders/PewterCity.asm]]
+ - [[data/mapHeaders/Route3.asm]]
+ - [[data/mapHeaders/Museum1F.asm]]
+  - which references [[data/mapHeaders/Museum2F.asm]]
+ - [[data/mapHeaders/PewterGym.asm]]
+ - [[data/mapHeaders/PewterHouse1.asm]]
+ - [[data/mapHeaders/PewterMart.asm]]
+ - [[data/mapHeaders/PewterHouse2.asm]]
+ - [[data/mapHeaders/PewterPokecenter.asm]]
+ 
+it's very easy to miss entire indoor areas (such as the museum, here) when just looking through an alphabetical file list!!!
+
+as part of this initial exploration, let's also open [[maps/PewterCity.blk]] in Polished Map (and also Options > uncheck "Monochrome")
+[[https://smilebasicsource.com/api/File/raw/27458#.png]]\\
+not going to get too into map editing here but it is important to note that maps are defined in terms of 2x2 "blocks" made up of 4 tiles each. (the blockset can be seen on the left side.)
+
+*** objects
+Polished Map literally loves 2 loading map objects,,\\
+so it's easier to make sense of the object coordinates here. hovering over events in event mode will present the source line as a tooltip.
+
+if we Data > View Event Script we can open the associated mapObjects file from earlier conveniently. copying the =SPRITE_BLACK_HAIR_BOY_2, $1a, $19= line and using coordinates for the top left (say, =$6, $5=) (DON'T FORGET TO INCREMENT THE OBJECT COUNT (from $7 to $8)!!) then reloading the event script (C-r) reflects that change.
+[[https://smilebasicsource.com/api/File/raw/27475#.png]]\\
+for npcs with the WALK movement type, the next argument is referred to as "direction/range"... where range should be understood as "which axes," except there are a bunch of special cases -- half of them ($D* for forced movement) are implemented only for movement scripts. for normal object definitions:
+ - $0 allows walking in any direction
+ - $1 is vertical movement only
+ - $2 is horizontal movement only
+
+*** object text
+the last argument to =object= is its /text id/. for this we have to look in the map script in [[scripts]], specifically the [[scripts/PewterCity.asm#L16][*TextPointers table*]]. the text id is an index into this table; if we want to add another unique text line, since there are 16 text references in pewter city already, this one will have to be 17. that is, changing our new object's text id to =$11= and adding a new text pointer entry =dw PewterCityText15= (for the next, uh, unused number. you don't have to name yours as confusingly!). the text definitions are organized in [[text/maps]], but uh-oh! those labels are indirections; they're prefixed with underscore in [[text/maps/PewterCity.asm]]! we have to reference the /actual/ text with a =TX_FAR= macro in the pewter city script,
+e.g.
+#+BEGIN_SRC asm
+PewterCityText15:
+	TX_FAR _PewterCityText15
+	db "@"
+#+END_SRC
+
+and /then/ it's okay to define the actual text, adding to [[text/maps/PewterCity.asm]]:
+#+BEGIN_SRC asm
+_PewterCityText15::
+  text "Welcome to"
+  line "Pewter City"
+  done
+#+END_SRC
+
+in summary, adding new text to the text pointer table involves
+ - adding a =dw Label= line to the text pointer table in [[scripts]]
+ - defining control flow for that text in the script with =TX_FAR Label= and a terminating =db "@"= in the same file
+ - writing the text entry into the map's text organized in [[text/maps]]
+ 
+[[https://smilebasicsource.com/api/File/raw/27503#.png]]
+
+more advanced text repainting...\\
+as covered, PewterCityTextPointers is defined in [[scripts/PewterCity.asm#L16]] and refers to files in *[[text/maps]]*.
+
+there are two ways to find out which text belongs to which object:
+ - load up the game and talk to a trainer and find that text
+ - take a label from the text, check the text pointer table from the script, count out the index, and find that index in the mapObjects file
+
+we can check, for example, that =_PewterCityText1= belongs to =object SPRITE_LASS, $8, $f, STAY, NONE, $1=
+(see the [[#text-repainting]] section for more on text commands used under e.g. =_PewterCityText1=.)
+
+unfortunately, calling PlaySound from whatever bank scripts/ is in doesn't always seem to work(? question mark?)... but you /can/ make a TX_FAR reference to code in [[engine/]] that does. (see [[scripts/VermilionGym.asm][vermilion gym]] and [[engine/hidden_object_functions17.asm]] (and the [[https://github.com/JustRegularLuna/rpp-backup/blob/f79bacc8924d0dfc11ae4036a5121cbd603cb870/home.asm#L4745][weird TextPredefs table]] for examples (probably unused! i don't have better examples right now and it works though!))
+
+this /also/ means that the text used in a map isn't necessarily all going to be in =text/maps/=. event handling (such as yes/no choices and other asm events) tends to be written in the respective =scripts/= text handler, and might call out to functions in =engine/= to play sounds or insert variable text.\\
+in practice it doesn't seem like it's actually used in the base rom? except (according to =cat scripts/CeladonMansion3.asm | sed -nuE 's/\s*TX_FAR\s+(\w+)|\s*ld hl,\s+\(\w+Text\w+\)/\1/p' | grep -slf - engine/* engine/overworld/* text/maps/* --include=*.asm=) in [[scripts/CeladonMansion3.asm] which references [[engine/overworld/item.asm]] (and that's a change by the previous hackers for red++ anyway.) 
+
+actually writing custom scripty scripts for maps is like... out of scope and not something i fully understand. might come back and write some more common examples later.
+
+*** wild encounters
+okay, so we've changed all the text for pewter and pewter's subareas, now let's look at some things for the neighboring routes.\\
+the text for route trainer dialogue and signs is also under [[text/maps]], and map header/block data is still pretty much the same.
+
+but we also now get to look at [[data/wild_mons.asm]] and [[data/wildPokemon]].\\
+wild_mons.asm associates encounter tables with maps, and the files in wildPokemon/ are the table definitions
+
+most of the table is 'NoMons' because... most maps are indoors or overworld (or unused).
+this table corresponds to the same order as e.g. [[data/map_header_pointers.asm]], for reference.
+
+helpfully, =wild_mons.asm= also tells us the wild pokemon data format:
+#+BEGIN_SRC asm
+; wild pokemon data is divided into two parts.
+; first part:  pokemon found in grass
+; second part: pokemon found while surfing
+; each part goes as follows:
+    ; if first byte == 00, then
+        ; no wild pokemon on this map
+    ; if first byte != 00, then
+        ; first byte is encounter rate
+	; followed by 20 bytes:
+        ; level, species (ten times)
+#+END_SRC
+that is, there are exactly ten entries in each surf encounter table and ten entries in each grass encounter table. great. let's look at [[data/wildPokemon/route2.asm]].
+#+BEGIN_SRC asm
+Route2Mons:                   
+IF DEF(_HARD) ; Difficult rom 
+; Grass Mons                  
+  db $19                      
+  db 4,RATTATA                
+  db 4,PIDGEY                 
+  db 5,PIDGEY                 
+  db 5,RATTATA                
+  db 6,NIDORAN_M              
+  db 6,NIDORAN_F              
+  db 4,ZIGZAGOON              
+  db 4,ZIGZAGOON              
+  db 6,WEEDLE                 
+  db 6,CATERPIE               
+                              
+; Water Mons                  
+  db $00                      
+                              
+ELSE ; Normal rom             
+; Grass Mons                  
+  db $19                      
+  db 3,RATTATA                
+  db 3,PIDGEY                 
+  db 4,PIDGEY                 
+  db 4,RATTATA                
+  db 5,NIDORAN_M              
+  db 5,NIDORAN_F              
+  db 3,ZIGZAGOON              
+  db 3,ZIGZAGOON              
+  db 5,WEEDLE                 
+  db 5,CATERPIE               
+                              
+; Water Mons                  
+  db $00                      
+ENDC                          
+#+END_SRC
+well, unfortunately this mod having a hard mode flag complicates things a bit, but otherwise it's pretty clear to see we have a 0x19 first grass encounter table byte, 10 grass encounter entries, and then a 0x00 water encounter table byte, so no water encounter data. that makes sense, since there's no water on route 2.
+
+I don't believe in zigzagoon, so i'll change those to =ODDISH=. as discussed, we don't care /too/ much about balance--where it applies it's going to be much more worth it to see your name than trudge through two hours of pokemon no one likes.
+
+*** npc trainer data
+yeah
+ - [[data/trainer_parties.asm#L715]]
+ - [[data/trainer_parties_hard.asm#L775]]
+conveniently, the format is a dead simple level, list of mons, and a sentinel FF. inconveniently, they're organized by trainer class. fortunately, the hard mode mod actually annotated the locations! unfortunately, the annotation switches between 'route<#>' and 'route #<#>' and 'route <#>' formats.
+
+route 2 doesn't have any trainers, but route 3 does:
+ - Lass =db "Nicole@",14,JIGGLYPUFF,JIGGLYPUFF,EEVEE,$FF ; ROUTE #3 #1=
+ - BugCatcher =db "David@",15,WEEDLE,KAKUNA,$FF ; ROUTE3 #2=
+ - Youngster =db "Ben@",14,ZIGZAGOON,RATTATA,$FF ; ROUTE3 #3=
+ - BugCatcher =db "Lou@",15,CATERPIE,METAPOD,$FF ; ; ROUTE3 #4=
+ - Youngster =db "Arnold@",14,SPEAROW,SANDSHREW,$FF ; ROUTE3 #5=
+ - Lass =db "Jennifer@",15,JIGGLYPUFF,CLEFAIRY,$FF ; ROUTE #3 #5=
+ - BugCatcher =db "Larry@",15,ODDISH,BELLSPROUT,VENONAT,$FF ; ROUTE3 6=
+ - Lass =db "Hillary@",15,WIGGLYTUFF,CLEFABLE,$FF ; ; ROUTE #3 #7=
+doesn't take too long to track them down with the hard mode annotation... you just have to... find them in the normal file too...
+
+alternatively you could use the route trainer lists on like, bulbapedia, https://bulbapedia.bulbagarden.net/wiki/Kanto_Route_3#Generation_I_2 \\
+but oops the names don't line up so you have to look for the class and then level and then party eyeball grep aaa...
+
+* Appendix A: Hard Mode
+by default r++ builds pokeblue as a 'hard mode' rom ([[constants.asm#L1]]).
+
+in my searching, it seems that besides changing encounter levels it 
+ - [[engine/battle/core.asm#L6854][disables badge stat boosts]]
+ - [[engine/battle/trainer_ai.asm#L592][gives all trainer classes smarter move choice]]
+ - [[engine/battle/trainer_ai.asm#L729][changes the special AI item behavior to use (e.g. generic trainers will use potions)]]
+ - and [[engine/battle/read_trainer_party.asm#L246][uses different trainer party/stat data]]
+   - [[data/trainer_parties.asm#L76]] 
+   - [[data/trainer_parties_hard.asm#L76]]
+as well as updating some text to reflect this.
