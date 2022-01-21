@@ -6,21 +6,22 @@ TypeNames:
 	dw .Poison
 	dw .Ground
 	dw .Rock
-	dw .Bird
+	;dw .Bird
 	dw .Bug
 	dw .Ghost
 	dw .Steel
-	
-	dw .Unk    ; Unused
-	dw .Normal ; Unused
-	dw .Normal ; Unused
-	dw .Normal ; Unused
-	dw .Normal ; Unused
-	dw .Normal ; Unused
-	dw .Normal ; Unused
-	dw .Normal ; Unused
-	dw .Normal ; Unused
-	dw .Normal ; Unused
+
+	;; the type constant table was rewritten.
+	;; dw .Unk    ; Unused
+	;; dw .Normal ; Unused
+	;; dw .Normal ; Unused
+	;; dw .Normal ; Unused
+	;; dw .Normal ; Unused
+	;; dw .Normal ; Unused
+	;; dw .Normal ; Unused
+	;; dw .Normal ; Unused
+	;; dw .Normal ; Unused
+	;; dw .Normal ; Unused
 
 	dw .Fire
 	dw .Water
@@ -31,6 +32,7 @@ TypeNames:
 	dw .Dragon
 	dw .Dark
 	dw .Fairy
+	dw .Unk
 
 .Normal:   db "Normal@"
 .Fighting: db "Fighting@"
