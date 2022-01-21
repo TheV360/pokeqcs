@@ -291,6 +291,26 @@ well, unfortunately this mod having a hard mode flag complicates things a bit, b
 
 I don't believe in zigzagoon, so i'll change those to =ODDISH=. as discussed, we don't care /too/ much about balance--where it applies it's going to be much more worth it to see your name than trudge through two hours of pokemon no one likes.
 
+*** npc trainer data
+yeah
+ - [[data/trainer_parties.asm#L715]]
+ - [[data/trainer_parties_hard.asm#L775]]
+conveniently, the format is a dead simple level, list of mons, and a sentinel FF. inconveniently, they're organized by trainer class. fortunately, the hard mode mod actually annotated the locations! unfortunately, the annotation switches between 'route<#>' and 'route #<#>' and 'route <#>' formats.
+
+route 2 doesn't have any trainers, but route 3 does:
+ - Lass =db "Nicole@",14,JIGGLYPUFF,JIGGLYPUFF,EEVEE,$FF ; ROUTE #3 #1=
+ - BugCatcher =db "David@",15,WEEDLE,KAKUNA,$FF ; ROUTE3 #2=
+ - Youngster =db "Ben@",14,ZIGZAGOON,RATTATA,$FF ; ROUTE3 #3=
+ - BugCatcher =db "Lou@",15,CATERPIE,METAPOD,$FF ; ; ROUTE3 #4=
+ - Youngster =db "Arnold@",14,SPEAROW,SANDSHREW,$FF ; ROUTE3 #5=
+ - Lass =db "Jennifer@",15,JIGGLYPUFF,CLEFAIRY,$FF ; ROUTE #3 #5=
+ - BugCatcher =db "Larry@",15,ODDISH,BELLSPROUT,VENONAT,$FF ; ROUTE3 6=
+ - Lass =db "Hillary@",15,WIGGLYTUFF,CLEFABLE,$FF ; ; ROUTE #3 #7=
+doesn't take too long to track them down with the hard mode annotation... you just have to... find them in the normal file too...
+
+alternatively you could use the route trainer lists on like, bulbapedia, https://bulbapedia.bulbagarden.net/wiki/Kanto_Route_3#Generation_I_2 \\
+but oops the names don't line up so you have to look for the class and then level and then party eyeball grep aaa...
+
 * Appendix A: Hard Mode
 by default r++ builds pokeblue as a 'hard mode' rom ([[constants.asm#L1]]).
 
