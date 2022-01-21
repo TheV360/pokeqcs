@@ -2,7 +2,7 @@ MonsterNames:
 db "Bulbasaur@"
 db "Ivysaur@@@"
 db "Venusaur@@"
-db "Charmander"
+db "V360@@@@@@" ;Charmander
 db "Charmeleon"
 db "Charizard@"
 db "Squirtle@@"

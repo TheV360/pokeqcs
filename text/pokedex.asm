@@ -1399,13 +1399,21 @@ _MagnemiteDexEntry::
 	dex
 
 _CharmanderDexEntry::
-	text "Obviously prefers"
-	next "hot places. When"
-	next "it rains, steam"
+	text "when will someone"
+	next "make firefox 2"
+	next "...oh,"
+	
+	page "what the REALLY"
+	next "hell"
+	next ""
+	
+;	text "Obviously prefers"
+;	next "hot places. When"
+;	next "it rains, steam"
 
-	page "is said to spout"
-	next "from the tip of"
-	next "its tail"
+;	page "is said to spout"
+;	next "from the tip of"
+;	next "its tail"
 	dex
 
 _SquirtleDexEntry::

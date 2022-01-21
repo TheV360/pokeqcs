@@ -283,25 +283,34 @@ Mon003_EvosMoves:
 	db 0
 
 Mon004_EvosMoves:
-;CHARMANDER
+;FENNEKIN ;CHARMANDER
 ;Evolutions
 	db EV_LEVEL,16,CHARMELEON
 	db 0
 ;Learnset
 	db 1,SCRATCH
-	db 1,GROWL
-	db 7,EMBER
-	db 10,SMOKESCREEN
-	db 13,METAL_CLAW ; FireRed Level-up Move
-	db 16,HONE_CLAWS ; Dragon Rage → TM Move
-	db 19,DRAGON_RAGE ; Scary Face → Dragon Rage
-	db 25,FIRE_FANG
-	db 28,FLAME_WHEEL ; Flame Burst → Similar Move
-	db 34,SLASH
-	db 37,FLAMETHROWER
-	db 43,FIRE_SPIN
-	db 46,CRUNCH
-	db 50,FLARE_BLITZ ; Charizard Move
+	db 1,TAIL_WHIP
+	db 6,EMBER
+	db 9,SMOKESCREEN
+	;; db 13,METAL_CLAW ; FireRed Level-up Move
+	db 15, BABYDOLLEYES ; Lucky Chant -> Similar(?) move not light screen
+	db 18, FIRE_SPIN
+	;; db 16,HONE_CLAWS ; Dragon Rage → TM Move
+	;; db 19,DRAGON_RAGE ; Scary Face → Dragon Rage
+	db 21, LIGHT_SCREEN
+	db 24, FIRE_FANG ; Will-o-Wisp -> new move
+	;; db 25,FIRE_FANG
+	db 27, EXTRASENSORY ; Psyshock -> similar move
+	;; https://github.com/DanielOlivaw/pokecrystal16/blob/master/data/pokemon/evos_attacks_6.asm#L141
+	;; FLARE_UP is not a real move.
+	db 30,FLAME_WHEEL ; Flame Burst → Similar Move
+	;; db 34,SLASH
+	db 33,FLAMETHROWER
+	db 36, FOCUS_ENERGY ; Sunny Day -> new move...
+	db 39, FIRE_BLAST	
+	;; db 43,FIRE_SPIN
+	;; db 46,CRUNCH
+	;; db 50,FLARE_BLITZ ; Charizard Move
 	db 0
 
 Mon005_EvosMoves:

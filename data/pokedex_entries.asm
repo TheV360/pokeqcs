@@ -211,7 +211,7 @@ dw HoohDexEntry
 
 ; string: species name
 ; height in feet, inches
-; weight in pounds
+; weight in pounds (* 10)
 ; text entry
 
 RhydonDexEntry:
@@ -1194,10 +1194,10 @@ MagnemiteDexEntry:
 	TX_FAR _MagnemiteDexEntry
 	db "@"
 
-CharmanderDexEntry:
-	db "Lizard@"
-	db 2,0
-	dw 190
+CharmanderDexEntry: ; fennekin
+	db "Fox@"
+	db 1,4
+	dw 207
 	TX_FAR _CharmanderDexEntry
 	db "@"
 
