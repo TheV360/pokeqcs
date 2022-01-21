@@ -1,6 +1,7 @@
 ; INPUTS - Mon DVs in de, species in wGenderTemp
 ; OUTPUT - Mon's gender in wGenderTemp
 GetMonGender::
+	jp .genderless ; File/raw/27611
 	ld hl, MonGenderRatios
 	ld a, [wGenderTemp]
 	dec a
@@ -36,7 +37,7 @@ GetMonGender::
 	
 ; Compare the ratio to the value we found earlier
 	cp b
-	jr c, .male
+	jr c, .genderless ; all ratios are fem/genderless instead of male lol
 	
 .female
 	ld a, FEMALE
@@ -54,9 +55,9 @@ MonGenderRatios:
 	db MALE_88_PERCENT   ; Bulbasaur
 	db MALE_88_PERCENT   ; Ivysaur
 	db MALE_88_PERCENT   ; Venusaur
-	db MALE_88_PERCENT   ; Charmander
-	db MALE_88_PERCENT   ; Charmeleon
-	db MALE_88_PERCENT   ; Charizard
+	db FEMALE_75_PERCENT   ; Charmander
+	db FEMALE_75_PERCENT   ; Charmeleon
+	db FEMALE_75_PERCENT   ; Charizard
 	db MALE_88_PERCENT   ; Squirtle
 	db MALE_88_PERCENT   ; Wartortle
 	db MALE_88_PERCENT   ; Blastoise
