@@ -30,9 +30,12 @@ more:
  - *mon palette definitions (rgb555) [[data/super_palettes.asm#L279]]*
   - shiny: [[data/super_palettes.asm#L1114]]
   - (which palette to use for each sprite: [[data/mon_palettes.asm]])
- - dex descriptions: [[text/pokedex.asm]]
+- cry: [[crysaudio/cry_headers.asm]]
+  - [[https://github.com/DanielOlivaw/pokecrystal16/tree/main/crysaudio/cry_headers.asm][crystal16 cry data reference]] (base rom backported crystal audio engine)
+- dex descriptions: [[text/pokedex.asm]]
   - species, height, weight: [[data/pokedex_entries.asm#L212]]
   - for newmons dex order [[data/pokedex_order.asm]]
+
  
 * text repainting
  each line is 18 characters max,
