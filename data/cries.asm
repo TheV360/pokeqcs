@@ -4,8 +4,8 @@ db $0F, $80, $01; Bulbasaur
 db $0F, $20, $80; Ivysaur
 db $0F, $00, $C0; Venusaur
 db $24, 238,  72; Fennekin ;$04, $60, $40; Charmander
-db $04, $20, $40; Charmeleon
-db $04, $00, $80; Charizard
+db $24, 136, 224; Braixen  ;$04, $20, $40; Charmeleon
+db $24,  88, 284; Delphox  ;$04, $00, $80; Charizard
 db $1D, $60, $40; Squirtle
 db $1D, $20, $40; Wartortle
 db $13, $00, $80; Blastoise

@@ -314,54 +314,47 @@ Mon004_EvosMoves:
 	db 0
 
 Mon005_EvosMoves:
-;CHARMELEON
+;BRAIXEN
 ;Evolutions
 	db EV_LEVEL,36,CHARIZARD
 	db 0
 ;Learnset
 	db 1,SCRATCH
-	db 1,GROWL
-	db 7,EMBER
-	db 10,SMOKESCREEN
-	db 13,METAL_CLAW ; FireRed Level-up Move
-	db 17,HONE_CLAWS ; Dragon Rage → TM Move
-	db 21,DRAGON_RAGE ; Scary Face → Dragon Rage
-	db 28,FIRE_FANG
-	db 32,FLAME_WHEEL ; Flame Burst → Similar Move
-	db 39,SLASH
-	db 43,FLAMETHROWER
-	db 50,FIRE_SPIN
-	db 54,CRUNCH
-	db 60,FLARE_BLITZ ; Charizard Move
+	db 1,TAIL_WHIP
+	db 6,EMBER
+	db 9,SMOKESCREEN
+	db 15, BABYDOLLEYES ; Lucky Chant -> Similar(?) move not light screen
+	db 15, PSYBEAM
+	db 19, FIRE_SPIN
+	db 23, LIGHT_SCREEN
+	db 27, FIRE_FANG ; Will-o-Wisp -> new move
+	db 31, EXTRASENSORY ; Psyshock -> similar move
+	db 30,FLAME_WHEEL ; Flame Burst → Similar Move
+	db 39,FLAMETHROWER
+	db 43, FOCUS_ENERGY ; Sunny Day -> new move...
+	db 47, FIRE_BLAST	
 	db 0
 
 Mon006_EvosMoves:
-;CHARIZARD
+;DELPHOX
 ;Evolutions
 	db 0
 ;Learnset
-	db 1,WING_ATTACK ; Evolution Move
-	db 1,FLARE_BLITZ
-	db 1,DRAGONBREATH
-	db 1,DRAGON_CLAW
-	db 1,SHADOW_CLAW
-	db 1,AIR_SLASH
-	db 1,OUTRAGE ; HGSS Tutor Move
+	db 1,SHADOW_BALL
 	db 1,SCRATCH
-	db 1,GROWL
-	db 7,EMBER
-	db 10,SMOKESCREEN
-	db 13,METAL_CLAW ; FireRed Level-up Move
-	db 17,HONE_CLAWS ; Dragon Rage → TM Move
-	db 21,DRAGON_RAGE ; Scary Face → Dragon Rage
-	db 28,FIRE_FANG
-	db 32,FLAME_WHEEL ; Flame Burst → Similar Move
-	db 36,WING_ATTACK ; Evolution Move
-	db 41,SLASH
-	db 47,FLAMETHROWER
-	db 56,FIRE_SPIN
-	db 62,CRUNCH
-	db 71,FLARE_BLITZ
+	db 1,TAIL_WHIP
+	db 6,EMBER
+	db 9,SMOKESCREEN
+	db 15, BABYDOLLEYES
+	db 15, PSYBEAM
+	db 19, FIRE_SPIN
+	db 23, LIGHT_SCREEN
+	db 27, FIRE_FANG
+	db 31, EXTRASENSORY
+	db 40, FLAMETHROWER
+	db 45, FOCUS_ENERGY
+	db 50, FIRE_BLAST
+	db 55, PSYCHIC_M
 	db 0
 
 Mon007_EvosMoves:

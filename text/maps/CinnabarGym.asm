@@ -60,7 +60,7 @@ _TM38ExplanationText::
 	para "Teach it to fire-"
 	line "type #mon!"
 
-	para "Charmeleon or"
+	para "V720 or"
 	line "Ponyta would be"
 	cont "good bets!"
 	done
