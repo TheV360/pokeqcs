@@ -25,6 +25,12 @@ db 3 ; growth rate
 	; tmlearn 33,34,37,38,39,40
 	; tmlearn 41,44
 	; tmlearn 51,52,54
-	tmlearn 34,6,22,16,29,32,37,38,44,51,15,30,49
+	tmlearn 6
+	tmlearn 15,16
+	tmlearn 22
+	tmlearn 29,30,32
+	tmlearn 34,37,38
+	tmlearn 44
+	tmlearn 49,51
 	;TODO: could/should be expanded
 db BANK(CharizardPicFront)
