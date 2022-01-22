@@ -3,8 +3,8 @@ db "Bulbasaur@"
 db "Ivysaur@@@"
 db "Venusaur@@"
 db "V360@@@@@@" ;Charmander
-db "Charmeleon"
-db "Charizard@"
+db "V720@@@@@@" ;Charmeleon
+db "V1080@@@@@" ;Charizard
 db "Squirtle@@"
 db "Wartortle@"
 db "Blastoise@"

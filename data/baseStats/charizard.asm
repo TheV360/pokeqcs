@@ -1,14 +1,14 @@
 db DEX_CHARIZARD ; pokedex id
-db 78 ; base hp
-db 84 ; base attack
-db 78 ; base defense
-db 100 ; base speed
-db 85 ; base special
+db 75 ;78 ; base hp
+db 69 ;84 ; base attack
+db 72 ;78 ; base defense
+db 104 ;100 ; base speed
+db 107 ;85 ; base special  ; avg of 100 and 114
 db FIRE ; species type 1
-db FLYING ; species type 2
+db PSYCHIC ;FLYING ; species type 2
 db 45 ; catch rate
-db 209 ; base exp yield
-INCBIN "pic/bmon/charizard.pic",0,1 ; 77, sprite dimensions
+db 240 ;209 ; base exp yield
+INCBIN "pic/bmon/delphox.pic",0,1 ; 77, sprite dimensions
 dw CharizardPicFront
 dw CharizardPicBack
 ; move tutor compatibility flags

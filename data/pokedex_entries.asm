@@ -1195,7 +1195,7 @@ MagnemiteDexEntry:
 	db "@"
 
 CharmanderDexEntry: ; fennekin
-	db "Fox@"
+	db "SmallFox@"
 	db 1,4
 	dw 207
 	TX_FAR _CharmanderDexEntry
@@ -1208,10 +1208,10 @@ SquirtleDexEntry:
 	TX_FAR _SquirtleDexEntry
 	db "@"
 
-CharmeleonDexEntry:
-	db "Flame@"
-	db 3,7
-	dw 420
+CharmeleonDexEntry: ; braixen
+	db "Fox@"
+	db 3,3
+	dw 320
 	TX_FAR _CharmeleonDexEntry
 	db "@"
 
@@ -1222,10 +1222,10 @@ WartortleDexEntry:
 	TX_FAR _WartortleDexEntry
 	db "@"
 
-CharizardDexEntry:
-	db "Flame@"
-	db 5,7
-	dw 2000
+CharizardDexEntry: ; delphox
+	db "Fox@"
+	db 4,11
+	dw 860
 	TX_FAR _CharizardDexEntry
 	db "@"
 

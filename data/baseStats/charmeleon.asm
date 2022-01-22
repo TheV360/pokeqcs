@@ -1,14 +1,14 @@
 db DEX_CHARMELEON ; pokedex id
-db 58 ; base hp
-db 64 ; base attack
-db 58 ; base defense
-db 80 ; base speed
-db 65 ; base special
+db 59 ;58 ; base hp
+db 59 ;64 ; base attack
+db 58 ;58 ; base defense
+db 73 ;80 ; base speed
+db 80 ;65 ; base special  ; avg of 90 and 70
 db FIRE ; species type 1
 db FIRE ; species type 2
 db 45 ; catch rate
-db 142 ; base exp yield
-INCBIN "pic/bmon/charmeleon.pic",0,1 ; 66, sprite dimensions
+db 143 ;142 ; base exp yield
+INCBIN "pic/bmon/braixen.pic",0,1 ; 66, sprite dimensions
 dw CharmeleonPicFront
 dw CharmeleonPicBack
 ; move tutor compatibility flags

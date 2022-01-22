@@ -1398,14 +1398,14 @@ _MagnemiteDexEntry::
 	next "similar moves"
 	dex
 
-_CharmanderDexEntry::
+_CharmanderDexEntry:: ; fennekin ; v360
 	text "when will someone"
 	next "make firefox 2"
 	next "...oh,"
 	
 	page "what the REALLY"
 	next "hell"
-	next ""
+	dex
 	
 ;	text "Obviously prefers"
 ;	next "hot places. When"
@@ -1414,7 +1414,7 @@ _CharmanderDexEntry::
 ;	page "is said to spout"
 ;	next "from the tip of"
 ;	next "its tail"
-	dex
+;	dex
 
 _SquirtleDexEntry::
 	text "After birth, its"
@@ -1426,14 +1426,22 @@ _SquirtleDexEntry::
 	next "its mouth"
 	dex
 
-_CharmeleonDexEntry::
-	text "When it swings"
-	next "its burning tail,"
-	next "it elevates the"
+_CharmeleonDexEntry:: ; braixen ;TODO: remove placeholder text
+	text "im cool"
+	next "awesome sweet"
+	next "im beast"
+	
+	page "is that good?"
+	next "is this a good"
+	next "pokedex entry?"
+	
+;	text "When it swings"
+;	next "its burning tail,"
+;	next "it elevates the"
 
-	page "temperature to"
-	next "unbearably high"
-	next "levels"
+;	page "temperature to"
+;	next "unbearably high"
+;	next "levels"
 	dex
 
 _WartortleDexEntry::
@@ -1446,14 +1454,22 @@ _WartortleDexEntry::
 	next "maintain balance"
 	dex
 
-_CharizardDexEntry::
-	text "Spits fire that"
-	next "is hot enough to"
-	next "melt boulders."
+_CharizardDexEntry:: ; delphox ;TODO: remove placeholder text
+	text "ghgsdcdsdhd"
+	next "askdlmefswr"
+	next "asdslfksdf"
 
-	page "Known to cause"
+	page "sflkmlwmeqa"
 	next "forest fires"
 	next "unintentionally"
+	
+;	text "Spits fire that"
+;	next "is hot enough to"
+;	next "melt boulders."
+	
+;	page "Known to cause"
+;	next "forest fires"
+;	next "unintentionally"
 	dex
 
 _OddishDexEntry::
