@@ -18,11 +18,13 @@ dw CharmanderPicBack
 	m_tutor 0
 db 3 ; growth rate
 ; learnset
-	tmlearn 1,2,3,5,6,8
-	tmlearn 9,10,16
-	tmlearn 17,18,19,20,22,23
-	tmlearn 26,27,28,31,32
-	tmlearn 33,34,37,38,39,40
-	tmlearn 41,44
-	tmlearn 51,54
+	; tmlearn 1,2,3,5,6,8
+	; tmlearn 9,10,16
+	; tmlearn 17,18,19,20,22,23
+	; tmlearn 26,27,28,31,32
+	; tmlearn 33,34,37,38,39,40
+	; tmlearn 41,44
+	; tmlearn 51,54
+	tmlearn 34,6,22,16,29,32,37,38,44,51
+	;TODO: could/should be expanded
 db BANK(CharmanderPicFront)
