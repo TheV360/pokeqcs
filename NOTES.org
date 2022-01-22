@@ -4,19 +4,31 @@
 2. change the dex description text: [[text/pokedex.asm]] (red++ puts some newmons in [[text/pokedex2.asm]])
 3. change the dex species entry if necessary: [[data/pokedex_entries.asm]]
 
-
-other things
+more:
+ - *[[data/baseStats]]*
+  - base stats
+  - type
+  - catch rate, exp yield
+  - have to like declare the portrait here(??)
+  - move tutor (needs more research)
+  - growth rate [[engine/experience.asm#L154][table]] (0:medium fast; 1:almost-fast; 2:almost-med; 3:medium slow; 4:fast; 5:slow)
+  - tm learnset (reference table: [[data/tms.asm]] WHY don't these have constants)
+ - evolutions and learnset: [[data/evos_moves.asm]]
+  - can try referencing [[https://github.com/search?q=fennekin+attacks+repo%3ADanielOlivaw%2Fpokecrystal16+path%3A%2Fdata%2Fpokemon%2F&type=Code][the crystal16 evos_attacks* files]] for move mapping and [[https://github.com/DanielOlivaw/pokecrystal16/tree/main/data/pokemon/base_stats][base stats files]] (average special atk and def for special(?))
  - sprites
   - disasm provides these 4-color pngs for editing
-  - front sprite: [[pic/bmon]]
-  - back sprite: [[pic/monback]]
+  - *front sprite: [[pic/bmon]]*
+  - *back sprite: [[pic/monback]]*
+  - *pic included here: [[main.asm#L525]]*
   - these get converted by a python2 script to =.2bpp= files at build time
    - =python2 extras/pokemontools/gfx.py 2bpp pic/bmon/politoed.png=
    - =python2 extras/pokemontools/pic.py compress pic/bmon/politoed.2bpp=
- - palette references: [[data/mon_palettes.asm]]
-   - defined here: [[data/super_palettes.asm#L233]]
- - evolutions and learnset (unbalance sparingly,): [[data/evos_moves.asm]]
- - for newmons dex order [[data/pokedex_order.asm]]
+ - *mon palette definitions (rgb555) [[data/super_palettes.asm#L279]]*
+  - shiny: [[data/super_palettes.asm#L1114]]
+  - (which palette to use for each sprite: [[data/mon_palettes.asm]])
+ - dex descriptions: [[text/pokedex.asm]]
+  - species, height, weight: [[data/pokedex_entries.asm#L212]]
+  - for newmons dex order [[data/pokedex_order.asm]]
  
 * text repainting
  each line is 18 characters max,
